@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <script src="/scripts/jquery.js"></script>
+    <link rel="stylesheet" type="text/css" href="/style/bootstrap.css" />
+    <script src="/scripts/bootstrap.js"></script>
+    <link rel="stylesheet" href="/style/font-awesome.min.css" />
+</head>
+
+<body>
+    <form method="POST" class="form-horizontal" role="form" style="margin-top:50px;">
+        <div class="form-group">
+            <label class="control-label col-sm-3" for="txtName">Name:</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" value="" name="name" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3" for="txtLastName">Gender:</label>
+            <div class="col-sm-7">
+                <label class="radio-inline">
+                    <input type="radio" value="male" name="gender" />Male</label>
+                <label class="radio-inline">
+                    <input type="radio" value="female" name="gender" />FeMale</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3" for="txtCountry">Country:</label>
+            <div class="col-sm-7">
+                <input name="country" type="text" class="form-control" id="txtCountry" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-3" for="txtCity">City:</label>
+            <div class="col-sm-7">
+                <input name="city" type="text" class="form-control" id="txtCity" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-12" style="text-align:center;margin-top:30px;">
+                <button id="btnSubmit" type="submit" class="btn btn-primary" style="padding:9px 15px 9px 15px;">
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                    <span>Submit</span>
+                </button>
+                <a href="/student" class="btn btn-primary "
+                    style="padding:9px 15px 9px 15px;margin-left:10px; ">
+                    <i class="fa fa-times" aria-hidden="true"></i> Cancel
+                </a>
+            </div>
+        </div>
+    </form>
+</body>
+
+</html>
