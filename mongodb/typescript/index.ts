@@ -14,9 +14,9 @@ export const createApp = async () => {
 };
 if (process.env.NODE_ENV !== "test") {
     createApp().then(async (app) => {
-        console.log(`Your fort is located at address - ${process.env.APP_URL}`);
         await app.initDatabase();
         console.log('db connected');
+        console.log(`Your fort is located at address - ${process.env.APP_URL}`);
     }).catch(err => {
         console.error(err);
     });

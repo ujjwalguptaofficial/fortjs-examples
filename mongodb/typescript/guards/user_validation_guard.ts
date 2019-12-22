@@ -4,7 +4,7 @@ import { User } from "../models/user";
 
 export class UserValidationGuard extends Guard {
     async check() {
-        const user = new User(this.body);
+        const user = new User().init(this.body);
         // here i am using a plugin to validate but you can write your own code too. 
         const errors = await validate('User', user);
         if (errors.length === 0) {

@@ -1,14 +1,22 @@
-import { Controller, textResult, DefaultWorker, jsonResult, Worker, Route, HTTP_STATUS_CODE, HTTP_METHOD, Guards } from 'fortjs';
+import { Controller, textResult, DefaultWorker, jsonResult, Worker, Route, HTTP_STATUS_CODE, HTTP_METHOD, Guards, Singleton } from 'fortjs';
 import { UserService } from '../services/user_service';
 import { UserValidationGuard } from '../guards/user_validation_guard';
-import { IUser } from '../interfaces/user';
+import { User } from '../models/user';
 
 export class UserController extends Controller {
 
+    service: UserService;
+
+    constructor(@Singleton(UserService) service) {
+        super();
+        this.service = service;
+    }
+
     @DefaultWorker()
     async getUsers() {
-        const service = new UserService();
-        return jsonResult(await service.getAllUsers());
+        const users = await this.service.getAllUsers();
+        this.logger.log(users);
+        return jsonResult(users);
     }
 
     @Worker([HTTP_METHOD.Post])
@@ -16,8 +24,7 @@ export class UserController extends Controller {
     @Guards([UserValidationGuard])
     async addUser() {
         const user = this.data.user;
-        const service = new UserService();
-        const newUser = await service.addUser(user);
+        const newUser = await this.service.addUser(user);
         return jsonResult(newUser, HTTP_STATUS_CODE.Created);
     }
 
@@ -25,13 +32,13 @@ export class UserController extends Controller {
     @Guards([UserValidationGuard])
     @Route("/")
     async updateUser() {
-        const user: IUser = this.data.user;
-        const result = await new UserService().updateUser(user);
+        const user: User = this.data.user;
+        const result = await this.service.updateUser(user);
         if (result.n > 0) {
             return textResult("user updated");
         }
         else {
-            return textResult("user not updated");
+            return textResult("invalid user", 400);
         }
     }
 
@@ -39,7 +46,7 @@ export class UserController extends Controller {
     @Route("/{id}")
     async getUser() {
         const userId = this.param.id;
-        const user = await new UserService().getUserById(userId);
+        const user = await this.service.getUserById(userId);
         if (user == null) {
             return textResult("invalid id");
         }
@@ -51,9 +58,7 @@ export class UserController extends Controller {
     @Route("/{id}")
     async removeUser() {
         const userId = this.param.id;
-        const service = new UserService();
-        const user = await service.removeUserById(userId);
-        console.log(user);
+        const user = await this.service.removeUserById(userId);
         if (user.n > 0) {
             return textResult("user deleted");
         }
