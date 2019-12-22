@@ -1,7 +1,5 @@
 import * as path from "path";
-import {
-    App
-} from "./app";
+import { App } from "./app";
 
 export const createApp = async () => {
     const app = new App();
