@@ -2,8 +2,7 @@ import { Guard, HTTP_STATUS_CODE, textResult } from "fortjs";
 import { User } from "../models/user";
 import { isEmail, isLength, isIn } from "validator";
 
-export class ModelUserGuard extends Guard {
-
+export class UserValidationGuard extends Guard {
     validate(user) {
         let errMessage;
         if (user.name == null || !isLength(user.name, 5)) {
