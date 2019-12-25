@@ -1,6 +1,7 @@
 
-import { Controller, DefaultWorker, Worker, textResult, viewResult, Singleton, HTTP_METHOD, Route, redirectResult } from "fortjs";
+import { Controller, DefaultWorker, Worker, textResult, viewResult, Singleton, HTTP_METHOD, Route, redirectResult, Guards } from "fortjs";
 import { StudentService } from "../services/student_service";
+import { StudentValidatorGuard } from "../guards/student_validator_guard";
 
 export class StudentController extends Controller {
 
@@ -43,27 +44,18 @@ export class StudentController extends Controller {
 
     @Worker([HTTP_METHOD.Post])
     @Route("/add")
+    @Guards([StudentValidatorGuard])
     async addStudent() {
-        const student = {
-            name: this.body.name,
-            city: this.body.city,
-            country: this.body.country,
-            gender: this.body.gender
-        };
+        const student = this.data.student;
         this.service.addStudent(student);
         return redirectResult("/student");
     }
 
     @Worker([HTTP_METHOD.Post])
     @Route("/update")
+    @Guards([StudentValidatorGuard])
     async updateStudent() {
-        const student = {
-            id: this.body.id,
-            name: this.body.name,
-            city: this.body.city,
-            country: this.body.country,
-            gender: this.body.gender
-        };
+        const student = this.data.student;
         const isUpdated = this.service.updateStudent(student);
         if (isUpdated) {
             return redirectResult("/student");

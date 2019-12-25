@@ -25,7 +25,8 @@
   "dependencies": {
     "@types/squirrelly": "^7.1.0",
     "fortjs": "^1.10.4",
-    "squirrelly": "^7.9.0"
+    "squirrelly": "^7.9.0",
+    "validator": "^12.1.0"
   },
   "devDependencies": {
     "@types/jest": "^24.0.15",

@@ -12,7 +12,7 @@ export class ModelUserGuard extends Guard {
             errMessage = "password should be minimum 5 characters";
         } else if (user.gender == null || !isIn(user.gender, ["male", "female"])) {
             errMessage = "gender should be either male or female";
-        } else if (user.gender == null || !isEmail(user.emailId)) {
+        } else if (user.emailId == null || !isEmail(user.emailId)) {
             errMessage = "email not valid";
         } else if (user.address == null || !isLength(user.address, 10, 100)) {
             errMessage = "address length should be between 10 & 100";
