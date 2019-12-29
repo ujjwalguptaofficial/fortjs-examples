@@ -1,5 +1,5 @@
-# fortjs-typescript-starter
-Starter project for fortjs using typescript
+# MongoDb Example
+This is an example which demonstrate how to use mongodb in fortjs framework. Make sure you have mongodb installed and service runing.
 
 # How to use
 

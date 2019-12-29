@@ -23,7 +23,7 @@
   "homepage": "https://github.com/ujjwalguptaofficial/fortjs-typescript-starter#readme",
   "dependencies": {
     "class-validator": "^0.9.1",
-    "fortjs": "^1.10.4",
+    "fortjs": "^1.11.0",
     "mongoose": "^5.7.5"
   },
   "devDependencies": {

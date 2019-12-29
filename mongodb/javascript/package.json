@@ -33,7 +33,7 @@
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
-    "fortjs": "^1.10.4",
+    "fortjs": "^1.11.0",
     "mongoose": "^5.8.2",
     "validator": "^12.1.0"
   },
