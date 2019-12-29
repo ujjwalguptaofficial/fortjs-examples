@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "ejs": "^2.6.1",
-    "fortjs": "^1.6.0"
+    "fortjs": "^1.11.0"
   },
   "project": {
     "framework": "fortjs",

@@ -1,10 +1,12 @@
 import { ViewEngine, ViewEngineData, getViewFromFile } from "fortjs";
-import * as ejs from "ejs"; 
+import * as ejs from "ejs";
 
 export class EjsViewEngine implements ViewEngine {
 
     async render(value: ViewEngineData) {
-        const viewData = await getViewFromFile(value.view);
+        const viewData = await getViewFromFile({
+            fileLocation: value.view
+        });
         return ejs.render(viewData, value.model);
     }
 }

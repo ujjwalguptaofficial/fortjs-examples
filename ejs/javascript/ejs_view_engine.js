@@ -8,7 +8,9 @@ import * as ejs from "ejs";
 export class EjsViewEngine extends ViewEngine {
 
     async render(value) {
-        const viewData = await getViewFromFile(value.view);
+        const viewData = await getViewFromFile({
+            fileLocation: value.view
+        });
         return ejs.render(viewData, value.model);
     }
 }
