@@ -24,7 +24,7 @@
   "homepage": "https://github.com/ujjwalguptaofficial/fortjs-typescript-starter#readme",
   "dependencies": {
     "@types/squirrelly": "^7.1.0",
-    "fortjs": "^1.10.4",
+    "fortjs": "^1.11.0",
     "squirrelly": "^7.9.0",
     "validator": "^12.1.0"
   },

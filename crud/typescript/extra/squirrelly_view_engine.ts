@@ -8,8 +8,11 @@ export class SquirrellyViewEngine implements ViewEngine {
         // read view file - getViewFromFile read view file and also cache it in production
         // here we are using compiled view so that view engine does not need to compile again
         // & thus faster rendering
-        const compiledView: any = await getViewFromFile(value.view, (viewData) => {
-            return Sqrl.Compile(viewData);
+        const compiledView: any = await getViewFromFile({
+            fileLocation: value.view,
+            mapView: (viewData) => {
+                return Sqrl.Compile(viewData);
+            }
         });
         return compiledView(value.model, Sqrl);
     }
