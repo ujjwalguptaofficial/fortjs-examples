@@ -6,14 +6,9 @@ export class RedisSessionProvider extends SessionProvider {
 
     get(key) {
         return promise((res, rej) => {
-            redisClient.get(this.sessionId, (err, result) => {
-                if (err) {
-                    rej(err);
-                }
-                else {
-                    res(result != null ? result[key] : null);
-                }
-            });
+            this.getValueFromStore().then((result) => {
+                res(result != null ? result[key] : null);
+            }).catch(rej);
         })
     }
 
@@ -27,20 +22,17 @@ export class RedisSessionProvider extends SessionProvider {
 
 
 
-    set(key, value) {
-        return promise((res, rej) => {
-            this.getValueFromStore().then(savedValue => {
-                if (savedValue == null) {
-                    this.createSession();
-                    savedValue = { [key]: value };
-                }
-                else {
-                    // add or update value
-                    savedValue[key] = value;
-                }
-                this.addValueInStore(savedValue).then(res).catch(rej);
-            }).catch(rej);
-        });
+    async set(key, value) {
+        let savedValue = await this.getValueFromStore();
+        if (savedValue == null) {
+            this.createSession();
+            savedValue = { [key]: value };
+        }
+        else {
+            // add or update value
+            savedValue[key] = value;
+        }
+        await this.addValueInStore(savedValue);
     }
 
     setMany(values) {
@@ -52,9 +44,11 @@ export class RedisSessionProvider extends SessionProvider {
     }
 
     isExist(key) {
-        this.get(key).then(value => {
-            res(value != null);
-        }).catch(rej);
+        return promise((res, rej) => {
+            this.get(key).then(value => {
+                res(value != null);
+            }).catch(rej);
+        })
     }
 
     async clear() {
@@ -81,7 +75,11 @@ export class RedisSessionProvider extends SessionProvider {
 
     getValueFromStore() {
         return promise((res, rej) => {
-            redisClient.get(this.sessionId, (err, result) => {
+            if (this.sessionId == null) {
+                res(null);
+                return;
+            }
+            redisClient.hgetall(this.sessionId, (err, result) => {
                 if (err) {
                     rej(err);
                 }
