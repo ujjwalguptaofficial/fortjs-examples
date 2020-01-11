@@ -59,15 +59,19 @@ export class RedisSessionProvider extends SessionProvider {
 
     remove(key) {
         return promise((res, rej) => {
-            this.getValueFromStore().then(savedValue => {
-                if (savedValue != null) {
-                    delete savedValue[key];
-                    this.addValueInStore(savedValue).then(res).catch(rej);
-                }
-                else {
-                    res();
-                }
-            }).catch(rej);
+            if (this.sessionId != null) {
+                redisClient.hdel(this.sessionId, key, (err) => {
+                    if (err) {
+                        rej(err);
+                    }
+                    else {
+                        res();
+                    }
+                });
+            }
+            else {
+                res();
+            }
         })
     }
 
