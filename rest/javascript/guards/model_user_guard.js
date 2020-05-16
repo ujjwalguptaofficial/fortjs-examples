@@ -4,6 +4,20 @@ import { isEmail, isLength, isIn } from "validator";
 
 export class ModelUserGuard extends Guard {
 
+    async check() {
+        const user = new User().init(this.body);
+        const errMsg = this.validate(user);
+        if (errMsg == null) {
+            // pass user to worker method, so that they dont need to parse again
+            this.data.user = user;
+            // returning null means - this guard allows request to pass
+            return null;
+        } else {
+            return textResult(errMsg, HTTP_STATUS_CODE.BadRequest);
+        }
+    }
+
+
     validate(user) {
         let errMessage;
         if (user.name == null || !isLength(user.name, 5)) {
@@ -19,17 +33,3 @@ export class ModelUserGuard extends Guard {
         }
         return errMessage;
     }
-
-    async check() {
-        const user = new User().init(this.body);
-        const errMsg = this.validate(user);
-        if (errMsg == null) {
-            // pass user to worker method, so that they dont need to parse again
-            this.data.user = user;
-            // returning null means - this guard allows request to pass
-            return null;
-        } else {
-            return textResult(errMsg, HTTP_STATUS_CODE.BadRequest);
-        }
-    }
-}
