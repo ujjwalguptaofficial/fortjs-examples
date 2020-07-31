@@ -13,8 +13,7 @@ export class DefaultController extends Controller {
             }
         } catch (ex) {
             this.logger.error(`message - ${ex.message}, stack trace - ${ex.stack}`);
-            const result = textResult(`Our server is busy right now. Please try later.`);
-            return result;
+            return textResult(`Our server is busy right now. Please try later.`);
         }
     }
 }

@@ -1,16 +1,14 @@
 import * as path from "path";
-import {
-    App
-} from "./app";
+import { Fort } from "fortjs";
+import { routes } from "./routes";
 
-const app = new App();
-app.create({
-    folders: [{
-        alias: "/",
-        path: path.join(__dirname, "../static")
-    }]
-}).then(() => {
-    app.logger.debug("Your fort is located at address - localhost:4000");
+Fort.routes = routes;
+Fort.folders = [{
+    alias: "/",
+    path: path.join(__dirname, "../static")
+}];
+Fort.create().then(() => {
+    Fort.logger.debug("Your fort is located at address - localhost:4000");
 }).catch(err => {
     console.error(err);
 })
