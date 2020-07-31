@@ -23,7 +23,7 @@ export class DefaultController extends Controller {
 
     }
 
-    @Worker([HTTP_METHOD.Get])
+    @Worker(HTTP_METHOD.Get)
     @Route('/chat')
     async chat() {
 

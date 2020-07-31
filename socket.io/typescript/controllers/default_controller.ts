@@ -15,11 +15,9 @@ export class DefaultController extends Controller {
         return result;
     }
 
-    @Worker([HTTP_METHOD.Get])
+    @Worker(HTTP_METHOD.Get)
     @Route('/chat')
     async chat() {
-        const viewData = await renderView('default/chat.html');
-        const result = await htmlResult(viewData);
-        return result;
+        return viewResult('default/chat.html');
     }
 }
