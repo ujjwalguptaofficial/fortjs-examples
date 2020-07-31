@@ -1,14 +1,14 @@
 import axios from "axios";
 import { createApp } from "../index";
+import { Fort } from "fortjs";
 
 
 
 describe('/user', () => {
 
-    let app;
     let httpRequest;
     beforeAll(async () => {
-        app = await createApp();
+        await createApp();
         httpRequest = axios.create({
             baseURL: process.env.APP_URL + "/user",
             timeout: 1000
@@ -126,7 +126,7 @@ describe('/user', () => {
     });
 
     afterAll(() => {
-        return app.destroy();
+        return Fort.destroy();
     });
 
 });

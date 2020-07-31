@@ -1,14 +1,14 @@
-import { jsonResult, textResult } from "fortjs";
+import { jsonResult, textResult, Fort } from "fortjs";
 import { createApp } from "../index";
 import { UserController } from "./user_controller";
 import { UserService } from "../services/user_service";
 
 describe('UserController', () => {
-    let app, controller;
-    
+    let controller;
+
     beforeAll(async () => {
-        app = await createApp();
         controller = new UserController(new UserService());
+        await createApp();
     });
 
     it('getUsers', async () => {
@@ -120,6 +120,6 @@ describe('UserController', () => {
     });
 
     afterAll(() => {
-        return app.destroy();
+        return Fort.destroy();
     });
 });

@@ -6,4 +6,4 @@ Starter project for fortjs using javascript
 *  Clone or download the repo
 *  Open the folder location in a command prompt
 *  run command - `npm install`
-*  run command - `npm run start`
+*  run command - `npm run dev`

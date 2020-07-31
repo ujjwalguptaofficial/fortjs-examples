@@ -1,21 +1,6 @@
-import {
-    Controller,
-    textResult,
-    DefaultWorker,
-    jsonResult,
-    Worker,
-    Route,
-    HTTP_STATUS_CODE,
-    HTTP_METHOD,
-    Guards,
-    Singleton
-} from 'fortjs';
-import {
-    UserService
-} from '../services/user_service';
-import {
-    ModelUserGuard
-} from '../guards/model_user_guard';
+import { Controller, textResult, DefaultWorker, jsonResult, Worker, Route, HTTP_STATUS_CODE, HTTP_METHOD, Guards, Singleton } from 'fortjs';
+import { UserService } from '../services/user_service';
+import { ModelUserGuard } from '../guards/model_user_guard';
 
 export class UserController extends Controller {
 
@@ -29,17 +14,17 @@ export class UserController extends Controller {
         return jsonResult(this.service.getUsers());
     }
 
-    @Worker([HTTP_METHOD.Post])
+    @Worker(HTTP_METHOD.Post)
     @Route("/")
-    @Guards([ModelUserGuard])
+    @Guards(ModelUserGuard)
     async addUser() {
         const user = this.data.user;
         const newUser = this.service.addUser(user);
         return jsonResult(newUser, HTTP_STATUS_CODE.Created);
     }
 
-    @Worker([HTTP_METHOD.Put])
-    @Guards([ModelUserGuard])
+    @Worker(HTTP_METHOD.Put)
+    @Guards(ModelUserGuard)
     @Route("/")
     async updateUser() {
 
@@ -53,7 +38,7 @@ export class UserController extends Controller {
 
     }
 
-    @Worker([HTTP_METHOD.Get])
+    @Worker(HTTP_METHOD.Get)
     @Route("/{id}")
     async getUser() {
 
@@ -66,7 +51,7 @@ export class UserController extends Controller {
 
     }
 
-    @Worker([HTTP_METHOD.Delete])
+    @Worker(HTTP_METHOD.Delete)
     @Route("/")
     async removeByQueryString(@Singleton(UserService) service) {
         // taking id from query string
@@ -81,7 +66,7 @@ export class UserController extends Controller {
         }
     }
 
-    @Worker([HTTP_METHOD.Delete])
+    @Worker(HTTP_METHOD.Delete)
     @Route("/{id}")
     async removeUser() {
 
