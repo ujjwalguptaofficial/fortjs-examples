@@ -1,12 +1,11 @@
 import { DefaultController } from "./default_controller";
-import { viewResult } from "fortjs";
+import { viewResult, Fort } from "fortjs";
 import { createApp } from "../index";
 
 describe('DefaultController', () => {
-    let app;
     let controller;
     beforeAll(async () => {
-        app = await createApp();
+        await createApp();
         controller = new DefaultController();
     });
 
@@ -20,6 +19,6 @@ describe('DefaultController', () => {
     });
 
     afterAll(() => {
-        return app.destroy();
+        return Fort.destroy();
     });
 });
