@@ -1,21 +1,22 @@
 import * as path from "path";
-import { App } from "./app";
+import { Fort } from "fortjs";
+import { routes } from "./routes";
+import { XmlToJsonParser } from "./xml-parser";
 
 export const createApp = async () => {
-    const app = new App();
-    await app.create({
-        folders: [{
-            alias: "/",
-            path: path.join(__dirname, "../static")
-        }]
-    });
+    Fort.routes = routes;
+    Fort.folders = [{
+        alias: "/",
+        path: path.join(__dirname, "../static")
+    }];
+    Fort.xmlParser = XmlToJsonParser
+    await Fort.create();
     process.env.APP_URL = "http://localhost:4000";
-    return app;
 };
 
 if (process.env.NODE_ENV !== "test") {
-    createApp().then((app) => {
-        app.logger.debug(`Your fort is located at address - ${process.env.APP_URL}`);
+    createApp().then(() => {
+        Fort.logger.info(`Your fort is located at address - ${process.env.APP_URL}`);
     }).catch(err => {
         console.error(err);
     });
