@@ -21,7 +21,7 @@ export class StudentController extends Controller {
         });
     }
 
-    @Worker([HTTP_METHOD.Get])
+    @Worker(HTTP_METHOD.Get)
     @Route("/edit/{id}")
     async editStudent() {
         const studentId = Number(this.param.id);
@@ -37,25 +37,25 @@ export class StudentController extends Controller {
         }
     }
 
-    @Worker([HTTP_METHOD.Get])
+    @Worker(HTTP_METHOD.Get)
     @Route("/add")
     async getStudentForm() {
         return viewResult("student/add.html");
     }
 
 
-    @Worker([HTTP_METHOD.Post])
+    @Worker(HTTP_METHOD.Post)
     @Route("/add")
-    @Guards([StudentValidatorGuard])
+    @Guards(StudentValidatorGuard)
     async addStudent() {
         const student: Student = this.data.student;
         this.service.addStudent(student);
         return redirectResult("/student");
     }
 
-    @Worker([HTTP_METHOD.Post])
+    @Worker(HTTP_METHOD.Post)
     @Route("/update")
-    @Guards([StudentValidatorGuard])
+    @Guards(StudentValidatorGuard)
     async updateStudent() {
         const student: Student = this.data.student;
         const isUpdated = this.service.updateStudent(student);
@@ -67,7 +67,7 @@ export class StudentController extends Controller {
         }
     }
 
-    @Worker([HTTP_METHOD.Get])
+    @Worker(HTTP_METHOD.Get)
     @Route("/delete/{id}")
     async deleteStudent() {
         const studentId = Number(this.param.id);
