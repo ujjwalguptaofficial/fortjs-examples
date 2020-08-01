@@ -8,7 +8,7 @@
     "webpack:watch": "webpack --config webpack.config.js --watch",
     "lint": "tslint src/**/*.ts",
     "build": "npm run webpack",
-    "start": "npm run webpack:watch",
+    "dev": "npm run webpack:watch",
     "deploy": "NODE_ENV=production npm run build",
     "test": "cross-env NODE_ENV=test jest --runInBand"
   },
@@ -32,7 +32,7 @@
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
-    "fortjs": "^1.8.2",
+    "fortjs": "^2.0.0",
     "validator": "^11.1.0"
   },
   "project": {

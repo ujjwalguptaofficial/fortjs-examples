@@ -1,14 +1,14 @@
 import axios from "axios";
 import { createApp } from "../index";
+import { Fort } from "fortjs";
 
 
 
 describe('/user', () => {
 
-    let app;
     let httpRequest;
     beforeAll(async () => {
-        app = await createApp();
+        await createApp();
         httpRequest = axios.create({
             baseURL: process.env.APP_URL + "/user",
             timeout: 1000
@@ -25,7 +25,7 @@ describe('/user', () => {
         expect(response.status).toEqual(200);
         expect(response.headers['content-type']).toEqual('application/json');
         expect(response.data).toEqual([
-            { "address": "bhubaneswar india", "emailId": "ujjwal@mg.com", "gender": "male", "id": 1, "name": "ujjwal", "password": "admin" }
+            { "address": "Bangalore India", "emailId": "ujjwal@mg.com", "gender": "male", "id": 1, "name": "ujjwal", "password": "admin" }
         ]);
     });
 
@@ -38,7 +38,7 @@ describe('/user', () => {
         expect(response.status).toEqual(200);
         expect(response.headers['content-type']).toEqual('application/json');
         expect(response.data).toEqual(
-            { "address": "bhubaneswar india", "emailId": "ujjwal@mg.com", "gender": "male", "id": 1, "name": "ujjwal", "password": "admin" }
+            { "address": "Bangalore India", "emailId": "ujjwal@mg.com", "gender": "male", "id": 1, "name": "ujjwal", "password": "admin" }
         );
     });
 
@@ -126,7 +126,7 @@ describe('/user', () => {
     });
 
     afterAll(() => {
-        return app.destroy();
+        return Fort.destroy();
     });
 
 });

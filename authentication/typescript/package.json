@@ -8,7 +8,7 @@
     "webpack:watch": "webpack --config webpack.config.js --watch",
     "lint": "tslint src/**/*.ts",
     "build": "npm run webpack",
-    "start": "npm run webpack:watch && opn http://localhost:4000",
+    "dev": "npm run webpack:watch && opn http://localhost:4000",
     "test": "cross-env NODE_ENV=test jest --runInBand"
   },
   "repository": {
@@ -23,7 +23,7 @@
   "homepage": "https://github.com/ujjwalguptaofficial/fortjs-typescript-starter#readme",
   "dependencies": {
     "class-validator": "^0.9.1",
-    "fortjs": "^1.8.2"
+    "fortjs": "^2.0.0"
   },
   "devDependencies": {
     "@types/jest": "^24.0.17",

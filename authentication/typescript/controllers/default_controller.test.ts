@@ -3,9 +3,8 @@ import { viewResult, Fort } from "fortjs";
 import { createApp } from "../index";
 
 describe('DefaultController', () => {
-    let app: Fort;
     beforeAll(async () => {
-        app = await createApp();
+        await createApp();
     });
 
     it('index', async () => {
@@ -17,6 +16,6 @@ describe('DefaultController', () => {
     });
 
     afterAll(() => {
-        return app.destroy();
+        return Fort.destroy();
     });
 });

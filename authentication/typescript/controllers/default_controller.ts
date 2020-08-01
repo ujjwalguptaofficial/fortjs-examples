@@ -14,13 +14,13 @@ export class DefaultController extends Controller {
 
     }
 
-    @Worker([HTTP_METHOD.Get])
+    @Worker(HTTP_METHOD.Get)
     @Route("/login")
     async getLoginForm() {
         return viewResult("/default/login.html");
     }
 
-    @Worker([HTTP_METHOD.Post])
+    @Worker(HTTP_METHOD.Post)
     @Route("/login")
     async doLogin(@Singleton(UserService) service) {
         const email = this.body.email;
