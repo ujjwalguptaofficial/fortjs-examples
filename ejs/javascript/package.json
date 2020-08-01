@@ -8,7 +8,7 @@
     "webpack:watch": "webpack --config webpack.config.js --watch",
     "lint": "tslint src/**/*.ts",
     "build": "npm run webpack",
-    "start": "npm run webpack:watch && opn http://localhost:4000"
+    "dev": "npm run webpack:watch && opn http://localhost:4000"
   },
   "author": "Ujjwal Gupta",
   "license": "MIT",
@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "ejs": "^2.6.1",
-    "fortjs": "^1.11.0"
+    "fortjs": "^2.0.0"
   },
   "project": {
     "framework": "fortjs",
