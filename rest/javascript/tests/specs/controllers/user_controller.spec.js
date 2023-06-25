@@ -1,13 +1,12 @@
 import { jsonResult, textResult, Fort } from "fortjs";
-import { createApp } from "../index";
-import { UserController } from "./user_controller";
-import { UserService } from "../services/user_service";
+import { createApp } from "@/index";
+import { UserController } from "@/controllers/user_controller";
+import { UserService } from "@/services/user_service";
 
 describe('UserController', () => {
-    let controller;
+    const controller = new UserController(new UserService());
 
     beforeAll(async () => {
-        controller = new UserController(new UserService());
         await createApp();
     });
 

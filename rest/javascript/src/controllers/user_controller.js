@@ -1,31 +1,31 @@
-import { Controller, textResult, DefaultWorker, jsonResult, Worker, Route, HTTP_STATUS_CODE, HTTP_METHOD, Guards, Singleton } from 'fortjs';
-import { UserService } from '../services/user_service';
-import { ModelUserGuard } from '../guards/model_user_guard';
+import { Controller, textResult, defaultWorker, jsonResult, worker, route, HTTP_STATUS_CODE, HTTP_METHOD, guards, singleton } from 'fortjs';
+import { UserService } from '@/services/user_service';
+import { ModelUserGuard } from '@/guards/model_user_guard';
 
 export class UserController extends Controller {
 
-    constructor(@Singleton(UserService) service) {
+    constructor(@singleton(UserService) service) {
         super();
         this.service = service;
     }
 
-    @DefaultWorker()
+    @defaultWorker()
     async getUsers() {
         return jsonResult(this.service.getUsers());
     }
 
-    @Worker(HTTP_METHOD.Post)
-    @Route("/")
-    @Guards(ModelUserGuard)
+    @worker(HTTP_METHOD.Post)
+    @route("/")
+    @guards(ModelUserGuard)
     async addUser() {
         const user = this.data.user;
         const newUser = this.service.addUser(user);
         return jsonResult(newUser, HTTP_STATUS_CODE.Created);
     }
 
-    @Worker(HTTP_METHOD.Put)
-    @Guards(ModelUserGuard)
-    @Route("/")
+    @worker(HTTP_METHOD.Put)
+    @guards(ModelUserGuard)
+    @route("/")
     async updateUser() {
 
         const user = this.data.user;
@@ -38,8 +38,8 @@ export class UserController extends Controller {
 
     }
 
-    @Worker(HTTP_METHOD.Get)
-    @Route("/{id}")
+    @worker(HTTP_METHOD.Get)
+    @route("/{id}")
     async getUser() {
 
         const userId = Number(this.param.id);
@@ -51,9 +51,9 @@ export class UserController extends Controller {
 
     }
 
-    @Worker(HTTP_METHOD.Delete)
-    @Route("/")
-    async removeByQueryString(@Singleton(UserService) service) {
+    @worker(HTTP_METHOD.Delete)
+    @route("/")
+    async removeByQueryString(@singleton(UserService) service) {
         // taking id from query string
         const userId = Number(this.query.id);
         const user = service.getUser(userId);
@@ -66,8 +66,8 @@ export class UserController extends Controller {
         }
     }
 
-    @Worker(HTTP_METHOD.Delete)
-    @Route("/{id}")
+    @worker(HTTP_METHOD.Delete)
+    @route("/{id}")
     async removeUser() {
 
         const userId = Number(this.param.id);
