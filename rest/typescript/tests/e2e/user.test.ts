@@ -1,17 +1,10 @@
 import axios from "axios";
-import { createApp } from "../index";
-import { Fort } from "fortjs";
-
 
 describe('/user', () => {
 
-    let httpRequest;
-    beforeAll(async () => {
-        await createApp();
-        httpRequest = axios.create({
-            baseURL: process.env.APP_URL + "/user",
-            timeout: 1000
-        });
+    const httpRequest = axios.create({
+        baseURL: process.env.APP_URL + "/user",
+        timeout: 1000
     });
 
     it('/get all users', async () => {
@@ -122,9 +115,4 @@ describe('/user', () => {
             expect(ex.response.data).toEqual('invalid user id');
         }
     });
-
-    afterAll(() => {
-        return Fort.destroy();
-    });
-
 });
