@@ -57,7 +57,7 @@
     <form action="">
         <input id="m" autocomplete="off" /><button>Send</button>
     </form>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.dev.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.0/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
         $(function () {
@@ -68,6 +68,13 @@
                 socket.emit('chat message', msg);
                 $('#m').val('');
                 return false;
+            });
+
+            socket.on('chat message', function (msg) {
+                var item = document.createElement('li');
+                item.textContent = msg;
+                messages.appendChild(item);
+                window.scrollTo(0, document.body.scrollHeight);
             });
         });
     </script>
