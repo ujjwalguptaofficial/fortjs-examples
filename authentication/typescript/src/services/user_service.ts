@@ -7,7 +7,7 @@ interface IStore {
 const store: IStore = {
     users: [{
         id: 1,
-        name: "ujjwal",
+        name: "Ujjwal",
         address: "bhubaneswar india",
         emailId: "ujjwal@mg.com",
         gender: "male",

@@ -1,28 +1,27 @@
-import { Controller, DefaultWorker, textResult, viewResult, Worker, Assign, Singleton, HTTP_STATUS_CODE, HTTP_METHOD, Route, Shields } from "fortjs";
-import { UserService } from "../services/user_service";
+import { UserService } from "@/services/user_service";
+import { Controller, viewResult, assign, worker, route, HTTP_METHOD, singleton, textResult, HTTP_STATUS_CODE } from "fortjs";
 
 export class DefaultController extends Controller {
 
-    @DefaultWorker()
-    async index(@Assign('FortJs') title: string) {
-
+    @worker()
+    @route("/")
+    async index(@assign('FortJs') title: string) {
         const data = {
             title: title
         };
-        const result = await viewResult('default/index.html', data);
+        const result = await viewResult('../src/views/default/index.html', data);
         return result;
-
     }
 
-    @Worker(HTTP_METHOD.Get)
-    @Route("/login")
+    @worker(HTTP_METHOD.Get)
+    @route("/login")
     async getLoginForm() {
-        return viewResult("/default/login.html");
+        return viewResult("../src/views/default/login.html");
     }
 
-    @Worker(HTTP_METHOD.Post)
-    @Route("/login")
-    async doLogin(@Singleton(UserService) service) {
+    @worker(HTTP_METHOD.Post)
+    @route("/login")
+    async doLogin(@singleton(UserService) service: UserService) {
         const email = this.body.email;
         const password = this.body.password;
         const userFromService = service.getUserByEmailAndPassword(email, password);

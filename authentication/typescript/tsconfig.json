@@ -1,12 +1,13 @@
 {
     "compilerOptions": {
+        "baseUrl": "",
         "noImplicitAny": false,
         "noEmitOnError": true,
         "removeComments": false,
         "sourceMap": true,
         "inlineSources": true,
         "moduleResolution": "node",
-        "target": "es5",
+        "target": "es6",
         "preserveConstEnums": true,
         "module": "es6",
         "lib": [
@@ -14,6 +15,14 @@
             "dom"
         ],
         "experimentalDecorators": true,
-        "esModuleInterop": true
+        "esModuleInterop": true,
+        "paths": {
+            "@/*": [
+                "./src/*"
+            ],
+            "~/*": [
+                "./*"
+            ]
+        }
     }
 }

@@ -1,18 +1,44 @@
 import axios from "axios";
-import { createApp } from "../index";
-import { Fort } from "fortjs";
 
 
 describe('/user', () => {
 
-    let httpRequest;
-    beforeAll(async () => {
-        await createApp();
-        httpRequest = axios.create({
-            baseURL: process.env.APP_URL + "/user",
+    const httpRequest = axios.create({
+        baseURL: process.env.APP_URL + "/user",
+        timeout: 1000,
+        validateStatus(status) {
+            return true
+        },
+    });
+
+    let cookie;
+    httpRequest.interceptors.request.use(config => {
+        if (cookie != null) {
+            config.headers['Cookie'] = cookie;
+        }
+        return config;
+    });
+
+    it('/get all users without unauthenticated', async () => {
+        const response = await httpRequest.get('/');
+        expect(response.status).toEqual(401);
+        expect(response.headers['content-type']).toEqual('text/plain');
+        expect(response.data).toEqual("Not authenticated");
+    });
+
+    it("login", async () => {
+        const defaultHttpRequest = axios.create({
+            baseURL: process.env.APP_URL + "/",
             timeout: 1000
         });
-    });
+        const response = await defaultHttpRequest.post("/login", {
+            email: "ujjwal@mg.com",
+            password: "admin"
+        });
+        expect(response.status).toEqual(200);
+        expect(response.data).toEqual(`Welcome Ujjwal`);
+        cookie = response.headers['set-cookie'][0];
+    })
 
     it('/get all users', async () => {
         const response = await httpRequest.get('/', {
@@ -23,7 +49,7 @@ describe('/user', () => {
         expect(response.status).toEqual(200);
         expect(response.headers['content-type']).toEqual('application/json');
         expect(response.data).toEqual([
-            { "address": "bhubaneswar india", "emailId": "ujjwal@mg.com", "gender": "male", "id": 1, "name": "ujjwal", "password": "admin" }
+            { "address": "bhubaneswar india", "emailId": "ujjwal@mg.com", "gender": "male", "id": 1, "name": "Ujjwal", "password": "admin" }
         ]);
     });
 
@@ -36,7 +62,7 @@ describe('/user', () => {
         expect(response.status).toEqual(200);
         expect(response.headers['content-type']).toEqual('application/json');
         expect(response.data).toEqual(
-            { "address": "bhubaneswar india", "emailId": "ujjwal@mg.com", "gender": "male", "id": 1, "name": "ujjwal", "password": "admin" }
+            { "address": "bhubaneswar india", "emailId": "ujjwal@mg.com", "gender": "male", "id": 1, "name": "Ujjwal", "password": "admin" }
         );
     });
 
@@ -121,10 +147,6 @@ describe('/user', () => {
             expect(ex.response.status).toEqual(404);
             expect(ex.response.data).toEqual('invalid user id');
         }
-    });
-
-    afterAll(() => {
-        return Fort.destroy();
     });
 
 });

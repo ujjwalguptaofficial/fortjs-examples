@@ -1,5 +1,5 @@
 import { Guard, HTTP_STATUS_CODE, textResult } from "fortjs";
-import { User } from "../models/user";
+import { User } from "@/models/user";
 import { validate } from "class-validator";
 
 export class ModelUserGuard extends Guard {
