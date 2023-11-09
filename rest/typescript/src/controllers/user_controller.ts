@@ -1,6 +1,5 @@
-import { Controller, textResult, defaultWorker, jsonResult, worker, route, HTTP_STATUS_CODE, HTTP_METHOD, guards, singleton } from 'fortjs';
+import { Controller, textResult, jsonResult, HTTP_STATUS_CODE, singleton, http, validate, asBody } from 'fortjs';
 import { UserService } from '@/services/user_service';
-import { ModelUserGuard } from '@/guards/model_user_guard';
 import { User } from '@/models/user';
 
 export class UserController extends Controller {
@@ -11,25 +10,21 @@ export class UserController extends Controller {
         this.service = service;
     }
 
-    @defaultWorker()
+    @http.get("/")
     async getUsers() {
         return jsonResult(this.service.getUsers());
     }
 
-    @worker(HTTP_METHOD.Post)
-    @route("/")
-    @guards(ModelUserGuard)
-    async addUser() {
-        const user = this.data.user;
+    @validate.body(User)
+    @http.post("/")
+    async addUser(@asBody user: User) {
         const newUser = this.service.addUser(user);
         return jsonResult(newUser, HTTP_STATUS_CODE.Created);
     }
 
-    @worker(HTTP_METHOD.Put)
-    @guards(ModelUserGuard)
-    @route("/")
-    async updateUser() {
-        const user: User = this.data.user;
+    @validate.body(User)
+    @http.put("/")
+    async updateUser(@asBody user: User) {
         const userUpdated = this.service.updateUser(user);
         if (userUpdated === true) {
             return textResult("user updated");
@@ -37,13 +32,10 @@ export class UserController extends Controller {
         else {
             return textResult("invalid user");
         }
-
     }
 
-    @worker(HTTP_METHOD.Get)
-    @route("/{id}")
+    @http.get("/{id}")
     async getUser() {
-
         const userId = Number(this.param.id);
         const user = new UserService().getUser(userId);
         if (user == null) {
@@ -53,10 +45,8 @@ export class UserController extends Controller {
 
     }
 
-    @worker(HTTP_METHOD.Delete)
-    @route("/{id}")
+    @http.delete("/{id}")
     async removeUser() {
-
         const userId = Number(this.param.id);
         const user = this.service.getUser(userId);
         if (user != null) {
