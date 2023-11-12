@@ -1,6 +1,5 @@
-import { Controller, textResult, defaultWorker, jsonResult, worker, route, HTTP_STATUS_CODE, HTTP_METHOD, guards, singleton, shields } from 'fortjs';
+import { Controller, textResult, defaultWorker, jsonResult, HTTP_STATUS_CODE, singleton, shields, validate, http, asBody } from 'fortjs';
 import { UserService } from '@/services/user_service';
-import { ModelUserGuard } from '@/guards/model_user_guard';
 import { User } from '@/models/user';
 import { AuthenticationShield } from '@/shields/authentication_shield';
 
@@ -18,20 +17,16 @@ export class UserController extends Controller {
         return jsonResult(this.service.getUsers());
     }
 
-    @worker(HTTP_METHOD.Post)
-    @route("/")
-    @guards(ModelUserGuard)
-    async addUser() {
-        const user = this.data.user;
+    @http.post("/")
+    @validate.body(User)
+    async addUser(@asBody user) {
         const newUser = this.service.addUser(user);
         return jsonResult(newUser, HTTP_STATUS_CODE.Created);
     }
 
-    @worker(HTTP_METHOD.Put)
-    @guards(ModelUserGuard)
-    @route("/")
-    async updateUser() {
-        const user: User = this.data.user;
+    @validate.body(User)
+    @http.put("/")
+    async updateUser(@asBody user) {
         const userUpdated = this.service.updateUser(user);
         if (userUpdated === true) {
             return textResult("user updated");
@@ -42,10 +37,8 @@ export class UserController extends Controller {
 
     }
 
-    @worker(HTTP_METHOD.Get)
-    @route("/{id}")
+    @http.get("/{id}")
     async getUser() {
-
         const userId = Number(this.param.id);
         const user = new UserService().getUser(userId);
         if (user == null) {
@@ -55,10 +48,8 @@ export class UserController extends Controller {
 
     }
 
-    @worker(HTTP_METHOD.Delete)
-    @route("/{id}")
+    @http.delete("/{id}")
     async removeUser() {
-
         const userId = Number(this.param.id);
         const user = this.service.getUser(userId);
         if (user != null) {
@@ -68,7 +59,5 @@ export class UserController extends Controller {
         else {
             return textResult("invalid user id", 404);
         }
-
     }
-
 }

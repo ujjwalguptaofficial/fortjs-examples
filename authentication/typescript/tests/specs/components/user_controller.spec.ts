@@ -25,13 +25,9 @@ describe('UserController', () => {
             password: 'asdfvg',
             address: 'Bangalore India'
         };
-        controller.initialize({
-            data: {
-                user: newUser
-            }
-        });
+        controller.initialize();
         const expectedResult = jsonResult(newUser, 201);
-        const result = await controller.addUser();
+        const result = await controller.addUser(newUser);
         expect(result).toEqual(expectedResult);
         expect(result.responseData).toEqual(newUser);
     });
@@ -47,24 +43,16 @@ describe('UserController', () => {
             address: 'Bangalore India'
         };
         // update user for existing data
-        controller.initialize({
-            data: {
-                user: userData
-            }
-        });
+        controller.initialize();
         let expectedResult = await textResult("user updated");
-        let result = await controller.updateUser();
+        let result = await controller.updateUser(userData);
         expect(result).toEqual(expectedResult);
 
         // update user for not xisting data
         userData.id = 5;
-        controller.initialize({
-            data: {
-                user: userData
-            }
-        });
+        controller.initialize();
         expectedResult = textResult("invalid user");
-        result = await controller.updateUser();
+        result = await controller.updateUser(userData);
         expect(result).toEqual(expectedResult);
     });
 
