@@ -28,11 +28,11 @@ describe('/user', () => {
 
     it("login", async () => {
         const defaultHttpRequest = axios.create({
-            baseURL: process.env.APP_URL + "/",
+            baseURL: process.env.APP_URL + "/auth",
             timeout: 1000
         });
         const response = await defaultHttpRequest.post("/login", {
-            email: "ujjwal@mg.com",
+            email: "ujjwal@fortjs.com",
             password: "admin"
         });
         expect(response.status).toEqual(200);
@@ -49,7 +49,7 @@ describe('/user', () => {
         expect(response.status).toEqual(200);
         expect(response.headers['content-type']).toEqual('application/json');
         expect(response.data).toEqual([
-            { "address": "bhubaneswar india", "emailId": "ujjwal@mg.com", "gender": "male", "id": 1, "name": "Ujjwal", "password": "admin" }
+            { "address": "bhubaneswar india", "emailId": "ujjwal@fortjs.com", "gender": "male", "id": 1, "name": "Ujjwal", "password": "admin" }
         ]);
     });
 
@@ -62,7 +62,7 @@ describe('/user', () => {
         expect(response.status).toEqual(200);
         expect(response.headers['content-type']).toEqual('application/json');
         expect(response.data).toEqual(
-            { "address": "bhubaneswar india", "emailId": "ujjwal@mg.com", "gender": "male", "id": 1, "name": "Ujjwal", "password": "admin" }
+            { "address": "bhubaneswar india", "emailId": "ujjwal@fortjs.com", "gender": "male", "id": 1, "name": "Ujjwal", "password": "admin" }
         );
     });
 
