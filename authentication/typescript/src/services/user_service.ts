@@ -9,7 +9,7 @@ const store: IStore = {
         id: 1,
         name: "Ujjwal",
         address: "bhubaneswar india",
-        emailId: "ujjwal@mg.com",
+        emailId: "ujjwal@fortjs.com",
         gender: "male",
         password: "admin"
     }]

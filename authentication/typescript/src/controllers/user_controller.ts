@@ -12,7 +12,7 @@ export class UserController extends Controller {
         this.service = service;
     }
 
-    @defaultWorker()
+    @http.get("/")
     async getUsers() {
         return jsonResult(this.service.getUsers());
     }
