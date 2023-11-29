@@ -1,17 +1,10 @@
 import axios from "axios";
-import { createApp } from "..";
-
 
 describe('/default', () => {
 
-    let app;
-    let httpRequest;
-    beforeAll(async () => {
-        app = await createApp();
-        httpRequest = axios.create({
-            baseURL: process.env.APP_URL,
-            timeout: 1000
-        });
+    const httpRequest = axios.create({
+        baseURL: process.env.APP_URL,
+        timeout: 1000
     });
 
     it('index', async () => {
@@ -24,9 +17,4 @@ describe('/default', () => {
         expect(response.headers['content-type']).toEqual('text/html');
         expect(response.data).toContain('<title>FortJs</title>');
     });
-
-    afterAll(() => {
-        return app.destroy();
-    });
-
 });
