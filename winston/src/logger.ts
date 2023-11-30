@@ -10,7 +10,7 @@ const winstonLogger = createLogger({
         // - Write to all logs with level `info` and below to `combined.log`
         // - Write all logs error (and below) to `error.log`.
         //
-        new (transports as any).DailyRotateFile({
+        new transports.DailyRotateFile({
             datePattern: 'DD-MM-YYYY',
             filename: 'logs/error.log',
             level: 'error',
@@ -18,9 +18,10 @@ const winstonLogger = createLogger({
                 format.timestamp({
                     format: 'YYYY-MM-DD hh:mm:ss a',
                 }),
+                format.json()
             ),
         }),
-        new (transports as any).DailyRotateFile({
+        new transports.DailyRotateFile({
             datePattern: 'DD-MM-YYYY',
             filename: 'logs/all.log',
             level: 'info',
@@ -28,6 +29,7 @@ const winstonLogger = createLogger({
                 format.timestamp({
                     format: 'YYYY-MM-DD hh:mm:ss a',
                 }),
+                format.json()
             ),
         }),
     ],
@@ -72,9 +74,8 @@ class MyLogger extends Logger {
         winstonLogger.info(message.join(' '))
     }
 
-    debug(...args) {
-        // winstonLogger.debug(message);
-        console.log(...args)
+    debug(...message) {
+        winstonLogger.debug(message.join(' '));
     }
 
     log(level, msg) {
